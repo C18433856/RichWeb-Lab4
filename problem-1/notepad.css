@@ -1,0 +1,21 @@
+.note{
+    text-align: center;
+    word-wrap: break-word;
+    width: 20vw;
+    margin: auto;
+    margin-top: 1vh;
+    color: white;
+    font-size: 3vh;
+  }
+
+ .note p{
+    margin: 0;
+    background-color: blue;
+  }
+
+#buttons{
+    text-align: center;
+    width: 20vw;
+    margin: auto;
+    font-size: 3vh;
+}
