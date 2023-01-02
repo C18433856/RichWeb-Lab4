@@ -1,3 +1,9 @@
+#input{
+    text-align: center;
+    margin: auto;
+    width: 20vw;
+  }
+
 .note{
     text-align: center;
     word-wrap: break-word;

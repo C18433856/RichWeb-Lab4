@@ -12,16 +12,46 @@
     <body>
         <div id="root"></div>
         <script type="text/babel">
-            function Note() {
+            const { useState } = React
+
+            function Notepad() {
+                const [notes] = useState(["Note 1", "Note 2"])
+                return(
+                    <div id="main">
+                        <Input />
+                        <Notes notes = {notes}/>
+                    </div>
+                )
+
+
+            }
+            function Notes( {notes} ) {
+                return (
+                        notes.map(note => {
+                            return <Note note = {note} />
+                        })
+                )
+            }
+
+            function Note( {note} ) {
                 return(
                     <div className="note">
-                        <p id="note-text">text</p>
+                        <p id="note-text">{note}</p>
                         <div id="buttons"></div>
                     </div>
                 )
             }
+
+            function Input() {
+                return(
+                    <div id="input">
+                        <input type="text" id="entry" name="entry"></input>
+                        <button id="add">Add</button>
+                    </div>
+                )
+            }
         
-            ReactDOM.render(<Note />, document.getElementById("root"))
+            ReactDOM.render(<Notepad />, document.getElementById("root"))
         </script>
     </body>
 </html>
