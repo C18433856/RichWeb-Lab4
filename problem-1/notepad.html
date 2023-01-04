@@ -12,19 +12,21 @@
     <body>
         <div id="root"></div>
         <script type="text/babel">
-            let new_id = 0
+            let new_id = 0  // To generate unique ID for each note
             const { useState, useRef } = React
 
             function Notepad() {
-                const [notes, setNotes] = useState([])
+                const [notes, setNotes] = useState([])  
                 const newText = useRef()
 
+                // Delete a note with the argument id
                 function deleteNote(id){
                     const currNotes = [...notes]
                     setNotes(currNotes.filter(note => !(note.id === id)))
                     
                 }
 
+                // Edit the text of a note with the argument id
                 function editNote(id, newText){
                     const currNotes = [...notes]
                     const noteChange = currNotes.find(note => note.id ===  id)
@@ -32,6 +34,7 @@
                     setNotes(currNotes)
                 }
 
+                // Change the background color of a note with the argument id
                 function changeColor(id, color){
                     const currNotes = [...notes]
                     const noteChange = currNotes.find(note => note.id ===  id)
@@ -40,6 +43,7 @@
                 }
 
 
+                // Add note to the current set of notes
                 function addNote(){
                     const text = newText.current.value
                     if (text == "") {
@@ -53,7 +57,8 @@
                     new_id = new_id + 1
                         
                 }
-
+                
+                // Application body
                 return(
                     <div id="main">
                         <div id="input">
@@ -66,6 +71,8 @@
 
 
             }
+
+            // List of notes component
             function Notes( {notes, deleteNote, changeColor, editNote} ) {
                 return (
                         notes.map(note => {
@@ -75,6 +82,7 @@
                 )
             }
 
+            // Individual note component
             function Note( {note, deleteNote, changeColor, editNote} ) {
 
                 function handleDelete(){
@@ -90,11 +98,13 @@
                     editNote(note.id, editText)
                 }
 
+                // Change background color based on which button was pressed
                 function handleColor(btn){
                     const colorObj = {backgroundColor: btn.target.name}
                     changeColor(note.id, colorObj)
                 }
 
+                // Note body
                 return(
                     <div className="note">
                         <p style={note.bg} id="note-text">{note.name}</p>
