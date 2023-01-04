@@ -25,9 +25,18 @@
                     
                 }
 
-                function changeColor(id, color){
+                function editNote(id, newText){
+                    const currNotes = [...notes]
                     const noteChange = currNotes.find(note => note.id ===  id)
-                    noteChange.style.backgroundColor = color
+                    noteChange.name = newText
+                    setNotes(currNotes)
+                }
+
+                function changeColor(id, color){
+                    const currNotes = [...notes]
+                    const noteChange = currNotes.find(note => note.id ===  id)
+                    noteChange.bg = color
+                    setNotes(currNotes)
                 }
 
 
@@ -38,7 +47,7 @@
                         return
                     }
                     setNotes(prevNotes => {
-                        return [...prevNotes, {id: new_id, name: text}]
+                        return [...prevNotes, {id: new_id, name: text, bg: null}]
                     })
                     newText.current.value = null
                     new_id = new_id + 1
@@ -51,35 +60,50 @@
                             <input ref={newText} type="text" id="entry" name="entry" />
                             <button onClick={addNote} id="add">Add</button>
                         </div>
-                        <Notes notes = {notes} deleteNote = {deleteNote}/>
+                        <Notes notes = {notes} deleteNote = {deleteNote} editNote = {editNote} changeColor = {changeColor}/>
                     </div>
                 )
 
 
             }
-            function Notes( {notes, deleteNote} ) {
+            function Notes( {notes, deleteNote, changeColor, editNote} ) {
                 return (
                         notes.map(note => {
-                            return <Note key={note.id} deleteNote = {deleteNote} note = {note} />
+                            return <Note key={note.id} deleteNote = {deleteNote} changeColor = {changeColor} 
+                            editNote = {editNote} note = {note} />
                         })
                 )
             }
 
-            function Note( {note, deleteNote} ) {
+            function Note( {note, deleteNote, changeColor, editNote} ) {
 
                 function handleDelete(){
                     deleteNote(note.id)
                 }
 
+                function handleEdit(){
+                    const editText = prompt("Please enter new text")
+                    if(editText == ""){
+                        alert("Please enter some text")
+                        return
+                    }
+                    editNote(note.id, editText)
+                }
+
+                function handleColor(btn){
+                    const colorObj = {backgroundColor: btn.target.name}
+                    changeColor(note.id, colorObj)
+                }
+
                 return(
                     <div className="note">
-                        <p id="note-text">{note.name}</p>
+                        <p style={note.bg} id="note-text">{note.name}</p>
                         <div id="buttons">
                             <button onClick={handleDelete}>Delete</button>
-                            <button onClick={handleColor("red")}>Red</button>
-                            <button onClick={handleColor("blue")}>Blue</button>
-                            <button onClick={handleColor("green")}>Green</button>
-                            <button>Edit</button>
+                            <button name="red" onClick={handleColor}>Red</button>
+                            <button name="blue" onClick={handleColor}>Blue</button>
+                            <button name="green" onClick={handleColor}>Green</button>
+                            <button onClick={handleEdit}>Edit</button>
                         </div>
                     </div>
                 )
