@@ -12,41 +12,75 @@
     <body>
         <div id="root"></div>
         <script type="text/babel">
-            const { useState } = React
+            let new_id = 0
+            const { useState, useRef } = React
 
             function Notepad() {
-                const [notes] = useState(["Note 1", "Note 2"])
+                const [notes, setNotes] = useState([])
+                const newText = useRef()
+
+                function deleteNote(id){
+                    const currNotes = [...notes]
+                    setNotes(currNotes.filter(note => !(note.id === id)))
+                    
+                }
+
+                function changeColor(id, color){
+                    const noteChange = currNotes.find(note => note.id ===  id)
+                    noteChange.style.backgroundColor = color
+                }
+
+
+                function addNote(){
+                    const text = newText.current.value
+                    if (text == "") {
+                        alert("Please enter some text")
+                        return
+                    }
+                    setNotes(prevNotes => {
+                        return [...prevNotes, {id: new_id, name: text}]
+                    })
+                    newText.current.value = null
+                    new_id = new_id + 1
+                        
+                }
+
                 return(
                     <div id="main">
-                        <Input />
-                        <Notes notes = {notes}/>
+                        <div id="input">
+                            <input ref={newText} type="text" id="entry" name="entry" />
+                            <button onClick={addNote} id="add">Add</button>
+                        </div>
+                        <Notes notes = {notes} deleteNote = {deleteNote}/>
                     </div>
                 )
 
 
             }
-            function Notes( {notes} ) {
+            function Notes( {notes, deleteNote} ) {
                 return (
                         notes.map(note => {
-                            return <Note note = {note} />
+                            return <Note key={note.id} deleteNote = {deleteNote} note = {note} />
                         })
                 )
             }
 
-            function Note( {note} ) {
+            function Note( {note, deleteNote} ) {
+
+                function handleDelete(){
+                    deleteNote(note.id)
+                }
+
                 return(
                     <div className="note">
-                        <p id="note-text">{note}</p>
-                        <div id="buttons"></div>
-                    </div>
-                )
-            }
-
-            function Input() {
-                return(
-                    <div id="input">
-                        <input type="text" id="entry" name="entry"></input>
-                        <button id="add">Add</button>
+                        <p id="note-text">{note.name}</p>
+                        <div id="buttons">
+                            <button onClick={handleDelete}>Delete</button>
+                            <button onClick={handleColor("red")}>Red</button>
+                            <button onClick={handleColor("blue")}>Blue</button>
+                            <button onClick={handleColor("green")}>Green</button>
+                            <button>Edit</button>
+                        </div>
                     </div>
                 )
             }
