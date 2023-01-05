@@ -33,6 +33,15 @@ In the above example, useState is used to  store an initially empty list of note
 
 # In functional programming, what does the term functor mean? Can you give an example in JavaScript?
 
+A functor is a type of object that can be "mapped" over. This means that it has a built-in way to apply a function to each element in the object and create a new object with the transformed elements.
+
+One common example of a functor in JavaScript is the Array type. You can use the Array.map() method to apply a function to each element in an array and create a new array with the transformed elements.
+
+let nums = [1, 2, 3, 4];
+nums = nums.map(number => number + 1);
+
+In the above example, each number in the array is incremented by one.
+
 # We have looked at three kinds of asynchronous programming mechanisms,namely callbacks, promises and streams. Mention one advantage and one disadvantage of each type.
 
 # With the aid of a diagram and example code, describe the Cascading Style Sheets (CSS) Box Model and show how it can be used to space DOM elements
