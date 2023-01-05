@@ -44,6 +44,22 @@ In the above example, each number in the array is incremented by one.
 
 # We have looked at three kinds of asynchronous programming mechanisms,namely callbacks, promises and streams. Mention one advantage and one disadvantage of each type.
 
+Callbacks
+	Advantages:
+	- Callbacks are compatible with most JavaScript environments, including older browsers.
+	Disadvantages:
+	- Using callbacks exclusively can lead to multiple nested callbacks that are difficult to read and maintain.
+Promises
+	Advantages:
+	- Promises can be chained together, allowing you to write asynchronous code in a linear, easy-to-read style.
+	Disadvantages:
+	- Promises do not provide a way to cancel an asynchronous operation once it has started.
+Streams
+	Advantages:
+	- Streams are easy to chain together, allowing developers to create complex data processing pipelines
+	Disadvantages:
+	- Streams are not suitable for all types of data and use cases. They are best suited for handling large amounts of data that can be processed in a sequential or incremental manner.
+
 # With the aid of a diagram and example code, describe the Cascading Style Sheets (CSS) Box Model and show how it can be used to space DOM elements
 
 # Detail how the browser loads and bootstraps a rich web application from an initial URL
